@@ -218,3 +218,11 @@ button.tab { cursor: pointer; }
 .hero .slide.photo .tx { text-shadow: 0 1px 10px rgba(0,0,0,.25); }
 .qcard b { margin-top: 0; font-size: 15.5px; }
 @media (max-width: 720px) { .hero .slide.photo::after { background: linear-gradient(180deg, rgba(8,20,48,.66) 0%, rgba(8,20,48,.42) 55%, rgba(8,20,48,.12) 100%); } .hero .slide.photo .art { background-position: 62% 80%; } }
+
+/* 첫 화면: 카드뉴스를 가운데 한 줄로, 바로가기 6칸은 그 아래 */
+.top { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+.hero { min-height: 0; aspect-ratio: 1180 / 440; }
+.qgrid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.qcard { min-height: 112px; }
+@media (max-width: 1000px) { .qgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .hero { aspect-ratio: 16 / 8; } }
+@media (max-width: 720px) { .qgrid { grid-template-columns: 1fr 1fr; } .hero { aspect-ratio: auto; min-height: 300px; } .qcard { min-height: 88px; } }

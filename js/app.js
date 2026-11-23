@@ -69,9 +69,6 @@
       '<div class="nav"' + (slides.length < 2 ? ' hidden' : '') + '><button id="hp" aria-label="이전">‹</button><span class="num" id="hn">01 / 0' + slides.length + '</span><button id="hx" aria-label="다음">›</button></div></div>' +
       '<div class="qgrid">' + quick.map(function (k) { return '<a class="qcard" href="' + k[2] + '"><b>' + esc(k[1]) + '</b><div class="cir">' + art(k[3]) + '</div></a>'; }).join('') + '</div></div>' +
 
-      '<section class="sec"><div class="sec-h"><div><h2>이용권, 지금 바로 신청하세요</h2><p>' + esc(S.openNote) + '</p></div><a class="pill" href="list.html">전체 보기 ›</a></div>' +
-      '<div class="grid">' + items.slice(0, 8).map(function (i) { return card(i); }).join('') + '</div></section>' +
-
       '<div class="strip"><div><b>신청한 이용권,<br>마이페이지에서 바로 확인하세요</b><p>확정 여부 확인과 취소 요청을 한곳에서 할 수 있습니다.</p></div><a class="btn dark" href="' + (ME ? 'mypage.html' : 'join.html') + '">' + (ME ? '내 신청내역 보기' : '회원가입하고 신청하기') + '</a></div>' +
 
       '<section class="sec" id="guide"><div class="sec-h"><div><h2>이용 안내</h2><p>신청부터 이용까지 네 단계면 됩니다.</p></div></div>' +
