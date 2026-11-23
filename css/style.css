@@ -239,3 +239,10 @@ button.tab { cursor: pointer; }
 .qcard .cir { width: 86px; height: 72px; border-radius: 36px 0 0 0; }
 @media (max-width: 1000px) { .qcard { min-height: 124px; } }
 @media (max-width: 720px) { .qcard { min-height: 112px; padding: 14px 12px; } .qcard b { font-size: 15px; } .qcard .cir { width: 74px; height: 62px; border-radius: 32px 0 0 0; } }
+
+/* 바로가기 칸 높이 정리: 이름 한 줄 + 사진이 균형 있게 */
+.qcard { min-height: 116px; padding: 18px 18px; }
+.qcard b { font-size: 16.5px; }
+.qcard .cir { width: 92px; height: 74px; border-radius: 38px 0 0 0; }
+@media (max-width: 1000px) { .qcard { min-height: 110px; } }
+@media (max-width: 720px) { .qcard { min-height: 96px; padding: 14px 14px; } .qcard b { font-size: 15.5px; } .qcard .cir { width: 78px; height: 62px; border-radius: 32px 0 0 0; } }

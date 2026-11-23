@@ -64,7 +64,7 @@
     var slides = [
       ['sky', S.tagline, S.name + '\n이용권 신청', S.openNote, 'list.html', '이용권 보러 가기', 'img/hero-1.jpg']
     ];
-    var quick = C.cats.map(function (c) { return [c.desc.split(' ').slice(0, 2).join(' '), c.name, 'list.html?cat=' + c.id, c.id]; })
+    var quick = C.cats.map(function (c) { return [c.desc.split(' ').slice(0, 2).join(' '), c.short, 'list.html?cat=' + c.id, c.id]; })
       .concat([['신청한 이용권 확인', '마이페이지', 'mypage.html', 'list'], ['처음이신가요', '이용 안내', '#guide', 'sky']]);
     el.innerHTML = '<div class="wrap"><div class="top"><div class="hero" id="hero">' +
       slides.map(function (s, i) { return '<div class="slide' + (i ? '' : ' on') + (s[6] ? ' photo' : '') + '">' + art(s[0], s[6]) + '<div class="tx"' + (s[0] === 'gym' || s[6] ? ' style="color:#fff"' : '') + '><small>' + esc(s[1]) + '</small><h1>' + esc(s[2]).replace(/\n/g, '<br>') + '</h1><a class="btn ' + (s[0] === 'gym' || s[6] ? '' : 'dark') + '" href="' + s[4] + '">' + esc(s[5]) + ' →</a></div></div>'; }).join('') +
