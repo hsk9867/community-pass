@@ -226,3 +226,9 @@ button.tab { cursor: pointer; }
 .qcard { min-height: 112px; }
 @media (max-width: 1000px) { .qgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .hero { aspect-ratio: 16 / 8; } }
 @media (max-width: 720px) { .qgrid { grid-template-columns: 1fr 1fr; } .hero { aspect-ratio: auto; min-height: 300px; } .qcard { min-height: 88px; } }
+
+/* 바로가기 칸: 시설 사진이 보이도록 사진 자리를 키움 */
+.qcard { min-height: 124px; }
+.qcard .cir { width: 104px; height: 88px; border-radius: 44px 0 0 0; right: 0; bottom: 0; }
+.qcard b { padding-right: 0; }
+@media (max-width: 720px) { .qcard { min-height: 104px; } .qcard .cir { width: 92px; height: 74px; border-radius: 38px 0 0 0; } }

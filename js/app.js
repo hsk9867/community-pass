@@ -19,7 +19,9 @@
     sky: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 54h48M14 54V22l14-8v40M28 54V28l18-6v32M19 28v3M19 36v3M19 44v3M34 34v3M34 42v3M40 32v3M40 40v3"/></svg>',
     list: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="10" width="36" height="46" rx="4"/><path d="M23 23h18M23 33h18M23 43h10"/></svg>'
   };
-  function art(kind, photo) { return photo ? '<div class="art" style="background-image:url(\'' + esc(photo) + '\')"></div>' : '<div class="art ' + kind + '">' + (IC[kind] || '') + '</div>'; }
+  /* 시설 사진 (이용권에 따로 올린 사진이 없으면 시설별 기본 사진) */
+  var PH = { gym: 'img/fac-gym.jpg', study: 'img/fac-study.jpg', golf: 'img/fac-golf.jpg', locker: 'img/fac-locker.jpg' };
+  function art(kind, photo) { photo = photo || PH[kind]; return photo ? '<div class="art" style="background-image:url(\'' + esc(photo) + '\')"></div>' : '<div class="art ' + kind + '">' + (IC[kind] || '') + '</div>'; }
   function tags(i) { var p = pct(i); return '<div class="tags">' + (i.soldout ? '<span class="badge out">마감</span>' : '') + (p ? '<span class="badge sale">' + p + '%</span>' : '') + '</div>'; }
   function priceHtml(i) { var p = pct(i); return '<div class="pr num">' + (p ? '<em>' + p + '%</em>' : '') + won(i.price) + (p ? '<del>' + won(i.listPrice) + '</del>' : '') + '</div>'; }
   function card(i, row) {
