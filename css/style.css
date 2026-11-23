@@ -232,3 +232,10 @@ button.tab { cursor: pointer; }
 .qcard .cir { width: 104px; height: 88px; border-radius: 44px 0 0 0; right: 0; bottom: 0; }
 .qcard b { padding-right: 0; }
 @media (max-width: 720px) { .qcard { min-height: 104px; } .qcard .cir { width: 92px; height: 74px; border-radius: 38px 0 0 0; } }
+
+/* 바로가기 칸: 사진이 글자를 가리지 않게 사진을 줄이고 칸을 조금 높임 */
+.qcard { min-height: 136px; padding: 18px 16px; }
+.qcard b { position: relative; z-index: 2; white-space: nowrap; }
+.qcard .cir { width: 86px; height: 72px; border-radius: 36px 0 0 0; }
+@media (max-width: 1000px) { .qcard { min-height: 124px; } }
+@media (max-width: 720px) { .qcard { min-height: 112px; padding: 14px 12px; } .qcard b { font-size: 15px; } .qcard .cir { width: 74px; height: 62px; border-radius: 32px 0 0 0; } }
