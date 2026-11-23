@@ -27,14 +27,14 @@
     $('logout').onclick = function () { try { sessionStorage.removeItem('cp_admin'); } catch (e) {} location.reload(); };
     go('apps');
   }
-  function go(t) { tab = t; document.querySelectorAll('#tabs button').forEach(function (b) { b.classList.toggle('on', b.dataset.t === t); }); ({ apps: drawApps, items: drawItems, site: drawSite })[t](); }
+  function go(t) { tab = t; document.querySelectorAll('#tabs button').forEach(function (b) { b.classList.toggle('on', b.dataset.t === t); }); ({ apps: drawApps, users: drawUsers, items: drawItems, site: drawSite })[t](); }
 
   /* ---------- 신청 내역 ---------- */
   function filtered() {
     var k = F.q.trim().replace(/-/g, '');
     return apps.filter(function (a) {
       return (!F.cat || a.cat === F.cat) && (!F.st || a.status === F.st) && (!F.month || String(a.createdAt).slice(0, 7) === F.month) &&
-        (!k || [a.name, a.phone, a.dong + '동', a.ho + '호', a.dong + '-' + a.ho, a.no, a.itemName].join(' ').replace(/-/g, '').indexOf(k) >= 0);
+        (!k || [a.name, a.userId || '', a.phone, a.dong + '동', a.ho + '호', a.dong + '-' + a.ho, a.no, a.itemName].join(' ').replace(/-/g, '').indexOf(k) >= 0);
     });
   }
   function drawApps() {
@@ -54,9 +54,9 @@
   }
   function table() {
     var l = filtered();
-    $('tbl').innerHTML = l.length ? '<p class="cnt">조회 ' + l.length + '건 · 합계 <b class="num">' + won(l.filter(function (a) { return a.status !== '취소'; }).reduce(function (s, a) { return s + (a.amount || 0); }, 0)) + '</b> (취소 제외)</p><div class="tw"><table><thead><tr><th>신청일시</th><th>신청번호</th><th>이용권</th><th>이용자</th><th>동·호</th><th>연락처</th><th>생년월일</th><th>금액</th><th>상태</th><th>남긴 말</th><th></th></tr></thead><tbody>' +
+    $('tbl').innerHTML = l.length ? '<p class="cnt">조회 ' + l.length + '건 · 합계 <b class="num">' + won(l.filter(function (a) { return a.status !== '취소'; }).reduce(function (s, a) { return s + (a.amount || 0); }, 0)) + '</b> (취소 제외)</p><div class="tw"><table><thead><tr><th>신청일시</th><th>신청번호</th><th>이용권</th><th>회원 아이디</th><th>이용자</th><th>동·호</th><th>연락처</th><th>생년월일</th><th>금액</th><th>상태</th><th>남긴 말</th><th></th></tr></thead><tbody>' +
       l.map(function (a) {
-        return '<tr><td class="num">' + esc(a.createdAt) + '</td><td class="num">' + esc(a.no) + '</td><td>' + esc(a.itemName) + (a.qty > 1 ? ' ×' + a.qty : '') + '</td><td><b>' + esc(a.name) + '</b></td><td class="num">' + esc(a.dong) + '동 ' + esc(a.ho) + '호</td><td class="num">' + esc(a.phone) + '</td><td class="num">' + esc(a.birth || '') + '</td><td class="num">' + won(a.amount) + '</td>' +
+        return '<tr><td class="num">' + esc(a.createdAt) + '</td><td class="num">' + esc(a.no) + '</td><td>' + esc(a.itemName) + (a.qty > 1 ? ' ×' + a.qty : '') + '</td><td>' + esc(a.userId || '') + '</td><td><b>' + esc(a.name) + '</b></td><td class="num">' + esc(a.dong) + '동 ' + esc(a.ho) + '호</td><td class="num">' + esc(a.phone) + '</td><td class="num">' + esc(a.birth || '') + '</td><td class="num">' + won(a.amount) + '</td>' +
           '<td><select class="stsel ' + ST[a.status] + '" data-no="' + esc(a.no) + '">' + CP.STATUS.map(function (s) { return '<option' + (s === a.status ? ' selected' : '') + '>' + s + '</option>'; }).join('') + '</select></td><td class="memo">' + esc(a.memo || '') + '</td><td><button class="del" data-del="' + esc(a.no) + '">삭제</button></td></tr>';
       }).join('') + '</tbody></table></div>' : '<div class="empty">조건에 맞는 신청 내역이 없습니다.</div>';
     $('tbl').querySelectorAll('.stsel').forEach(function (s) { s.onchange = function () { CP.setStatus(s.dataset.no, s.value).then(function () { toast('상태를 "' + s.value + '"(으)로 바꿨습니다.'); drawApps(); }); }; });
@@ -69,16 +69,41 @@
     var l = filtered();
     if (!l.length) return toast('내려받을 신청 내역이 없습니다.');
     if (!window.XLSX) return toast('엑셀 도구를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.');
-    var head = ['신청번호', '신청일시', '시설', '이용권', '이용기간', '수량', '금액', '이용자', '동', '호', '연락처', '생년월일', '상태', '남긴 말'];
-    var rows = l.map(function (a) { return [a.no, a.createdAt, a.catName || '', a.itemName, a.period || '', a.qty || 1, a.amount || 0, a.name, a.dong, a.ho, a.phone, a.birth || '', a.status, a.memo || '']; });
+    var head = ['신청번호', '신청일시', '시설', '이용권', '이용기간', '수량', '금액', '이용자', '동', '호', '연락처', '생년월일', '상태', '남긴 말', '회원 아이디'];
+    var rows = l.map(function (a) { return [a.no, a.createdAt, a.catName || '', a.itemName, a.period || '', a.qty || 1, a.amount || 0, a.name, a.dong, a.ho, a.phone, a.birth || '', a.status, a.memo || '', a.userId || '']; });
     var ws = XLSX.utils.aoa_to_sheet([head].concat(rows));
-    ws['!cols'] = [12, 17, 16, 34, 24, 6, 10, 10, 7, 7, 15, 11, 9, 30].map(function (w) { return { wch: w }; });
+    ws['!cols'] = [12, 17, 16, 34, 24, 6, 10, 10, 7, 7, 15, 11, 9, 30, 14].map(function (w) { return { wch: w }; });
     ws['!autofilter'] = { ref: XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: rows.length, c: head.length - 1 } }) };
     for (var r = 1; r <= rows.length; r++) { var cell = ws[XLSX.utils.encode_cell({ r: r, c: 6 })]; if (cell) cell.z = '#,##0'; }
     var wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '신청 내역');
     var d = new Date(), p = function (n) { return (n < 10 ? '0' : '') + n; };
     XLSX.writeFile(wb, '이용권_신청내역_' + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + '.xlsx');
     toast(l.length + '건을 엑셀로 내려받았습니다.');
+  }
+
+  /* ---------- 회원 ---------- */
+  function drawUsers() {
+    Promise.all([CP.users(), CP.apps()]).then(function (r) {
+      var us = r[0], ap = r[1], n = function (id) { return ap.filter(function (a) { return a.userId === id && a.status !== '취소'; }).length; }, kw = '';
+      view.innerHTML = '<div class="bar"><b>회원 ' + us.length + '명</b><input id="u-q" placeholder="이름·아이디·연락처·동호수 검색"><button class="btn dark sm" id="uxls" style="margin-left:auto;height:40px">⬇ 회원 엑셀 내려받기</button></div><div id="utbl"></div>';
+      var list = function () { var k = kw.trim().replace(/-/g, ''); return us.filter(function (u) { return !k || [u.id, u.name, u.phone, u.dong + '동', u.ho + '호', u.dong + '-' + u.ho].join(' ').replace(/-/g, '').indexOf(k) >= 0; }); };
+      function tbl() {
+        var l = list();
+        $('utbl').innerHTML = l.length ? '<div class="tw"><table><thead><tr><th>가입일시</th><th>아이디</th><th>이름</th><th>동·호</th><th>연락처</th><th>생년월일</th><th>신청 수</th><th></th></tr></thead><tbody>' + l.map(function (u) {
+          return '<tr><td class="num">' + esc(u.joinedAt) + '</td><td>' + esc(u.id) + '</td><td><b>' + esc(u.name) + '</b></td><td class="num">' + esc(u.dong) + '동 ' + esc(u.ho) + '호</td><td class="num">' + esc(u.phone) + '</td><td class="num">' + esc(u.birth || '') + '</td><td class="num">' + n(u.id) + '건</td><td><button class="del" data-du="' + esc(u.id) + '">삭제</button></td></tr>';
+        }).join('') + '</tbody></table></div>' : '<div class="empty">' + (us.length ? '검색 결과가 없습니다.' : '아직 가입한 회원이 없습니다.') + '</div>';
+        $('utbl').querySelectorAll('[data-du]').forEach(function (b) { b.onclick = function () { if (b.dataset.arm) { CP.removeUser(b.dataset.du).then(drawUsers); return; } b.dataset.arm = '1'; b.textContent = '한 번 더'; setTimeout(function () { delete b.dataset.arm; b.textContent = '삭제'; }, 3000); }; });
+      }
+      $('u-q').oninput = function () { kw = this.value; tbl(); };
+      $('uxls').onclick = function () {
+        var l = list(); if (!l.length) return toast('내려받을 회원이 없습니다.'); if (!window.XLSX) return toast('엑셀 도구를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.');
+        var ws = XLSX.utils.aoa_to_sheet([['아이디', '이름', '동', '호', '연락처', '생년월일', '가입일시', '신청 수']].concat(l.map(function (u) { return [u.id, u.name, u.dong, u.ho, u.phone, u.birth || '', u.joinedAt, n(u.id)]; })));
+        ws['!cols'] = [14, 10, 7, 7, 15, 11, 17, 8].map(function (w) { return { wch: w }; });
+        var wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, '회원'); var d = new Date(), p2 = function (x) { return (x < 10 ? '0' : '') + x; };
+        XLSX.writeFile(wb, '회원목록_' + d.getFullYear() + p2(d.getMonth() + 1) + p2(d.getDate()) + '.xlsx'); toast(l.length + '명을 엑셀로 내려받았습니다.');
+      };
+      tbl();
+    });
   }
 
   /* ---------- 이용권 관리 ---------- */

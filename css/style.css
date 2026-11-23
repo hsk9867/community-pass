@@ -202,4 +202,12 @@ img, svg { display: block; max-width: 100%; }
 @media (min-width: 721px) { .buy-bar { margin-top: 4px; } }
 
 /* 상세·신청서에서는 플로팅 버튼을 숨김 (신청 버튼·입력 칸을 가리지 않게) */
-body[data-page=item] .fab, body[data-page=apply] .fab, body[data-page=done] .fab, body[data-page=orders] .fab { display: none; }
+body[data-page=item] .fab, body[data-page=apply] .fab, body[data-page=done] .fab, body[data-page=login] .fab, body[data-page=join] .fab, body[data-page=mypage] .fab { display: none; }
+
+/* 회원 화면 */
+.form-wrap.auth { max-width: 460px; }
+.logo span { overflow: hidden; text-overflow: ellipsis; }
+.logo { min-width: 0; } .logo i { flex: none; }
+button.tab { cursor: pointer; }
+@media (max-width: 1100px) { .gnb { gap: 18px; font-size: 14px; } .hd .wrap { gap: 22px; } .logo { font-size: 16px; } }
+@media (max-width: 720px) { .logo { font-size: 15px; flex: 1; } .hd .r .pill.keep { height: 32px; padding: 0 11px; font-size: 13px; } }
