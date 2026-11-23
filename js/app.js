@@ -67,7 +67,7 @@
     var quick = C.cats.map(function (c) { return [c.desc.split(' ').slice(0, 2).join(' '), c.name, 'list.html?cat=' + c.id, c.id]; })
       .concat([['신청한 이용권 확인', '마이페이지', 'mypage.html', 'list'], ['처음이신가요', '이용 안내', '#guide', 'sky']]);
     el.innerHTML = '<div class="wrap"><div class="top"><div class="hero" id="hero">' +
-      slides.map(function (s, i) { return '<div class="slide' + (i ? '' : ' on') + (s[6] ? ' photo' : '') + '">' + art(s[0], s[6]) + '<div class="tx"' + (s[0] === 'gym' || s[6] ? ' style="color:#fff"' : '') + '><small>' + esc(s[1]) + '</small><h1>' + esc(s[2]).replace(/\n/g, '<br>') + '</h1><p>' + esc(s[3]) + '</p><a class="btn ' + (s[0] === 'gym' || s[6] ? '' : 'dark') + '" href="' + s[4] + '">' + esc(s[5]) + ' →</a></div></div>'; }).join('') +
+      slides.map(function (s, i) { return '<div class="slide' + (i ? '' : ' on') + (s[6] ? ' photo' : '') + '">' + art(s[0], s[6]) + '<div class="tx"' + (s[0] === 'gym' || s[6] ? ' style="color:#fff"' : '') + '><small>' + esc(s[1]) + '</small><h1>' + esc(s[2]).replace(/\n/g, '<br>') + '</h1><a class="btn ' + (s[0] === 'gym' || s[6] ? '' : 'dark') + '" href="' + s[4] + '">' + esc(s[5]) + ' →</a></div></div>'; }).join('') +
       '<div class="nav"' + (slides.length < 2 ? ' hidden' : '') + '><button id="hp" aria-label="이전">‹</button><span class="num" id="hn">01 / 0' + slides.length + '</span><button id="hx" aria-label="다음">›</button></div></div>' +
       '<div class="qgrid">' + quick.map(function (k) { return '<a class="qcard" href="' + k[2] + '"><b>' + esc(k[1]) + '</b><div class="cir">' + art(k[3]) + '</div></a>'; }).join('') + '</div></div>' +
 
