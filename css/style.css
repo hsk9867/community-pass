@@ -254,3 +254,7 @@ button.tab { cursor: pointer; }
 /* 탭 버튼 글자를 세로 가운데로 (a 태그라 글자가 위로 붙던 문제) */
 .tab { display: inline-flex; align-items: center; justify-content: center; line-height: 1; white-space: nowrap; }
 .tab small { line-height: 1; }
+
+/* 카드뉴스 버튼을 제목에서 조금 더 아래로 */
+.hero .tx .btn { margin-top: 38px; }
+@media (max-width: 720px) { .hero .tx .btn { margin-top: 30px; } }
