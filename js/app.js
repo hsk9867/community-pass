@@ -21,7 +21,7 @@
   };
   /* 시설 사진 (이용권에 따로 올린 사진이 없으면 시설별 기본 사진) */
   var PH = { gym: 'img/fac-gym.jpg', study: 'img/fac-study.jpg', golf: 'img/fac-golf.jpg', locker: 'img/fac-locker.jpg' };
-  function art(kind, photo) { photo = photo || PH[kind]; return photo ? '<div class="art" style="background-image:url(\'' + esc(photo) + '\')"></div>' : '<div class="art ' + kind + '">' + (IC[kind] || '') + '</div>'; }
+  function art(kind, photo) { photo = photo || PH[kind]; return photo ? '<div class="art ph-' + kind + '" style="background-image:url(\'' + esc(photo) + '\')"></div>' : '<div class="art ' + kind + '">' + (IC[kind] || '') + '</div>'; }
   function tags(i) { var p = pct(i); return '<div class="tags">' + (i.soldout ? '<span class="badge out">마감</span>' : '') + (p ? '<span class="badge sale">' + p + '%</span>' : '') + '</div>'; }
   function priceHtml(i) { var p = pct(i); return '<div class="pr num">' + (p ? '<em>' + p + '%</em>' : '') + won(i.price) + (p ? '<del>' + won(i.listPrice) + '</del>' : '') + '</div>'; }
   function card(i, row) {
@@ -71,9 +71,9 @@
       '<div class="nav"' + (slides.length < 2 ? ' hidden' : '') + '><button id="hp" aria-label="이전">‹</button><span class="num" id="hn">01 / 0' + slides.length + '</span><button id="hx" aria-label="다음">›</button></div></div>' +
       '<div class="qgrid">' + quick.map(function (k) { return '<a class="qcard" href="' + k[2] + '"><b>' + esc(k[1]) + '</b><div class="cir">' + art(k[3]) + '</div></a>'; }).join('') + '</div></div>' +
 
-      '<div class="strip"><div><b>신청한 이용권,<br>마이페이지에서 바로 확인하세요</b><p>확정 여부 확인과 취소 요청을 한곳에서 할 수 있습니다.</p></div><a class="btn dark" href="' + (ME ? 'mypage.html' : 'join.html') + '">' + (ME ? '내 신청내역 보기' : '회원가입하고 신청하기') + '</a></div>' +
+      '<div class="strip"><div><b>신청한 이용권,<br>마이페이지에서 바로 확인하세요</b></div><a class="btn dark" href="' + (ME ? 'mypage.html' : 'join.html') + '">' + (ME ? '내 신청내역 보기' : '회원가입하고 신청하기') + '</a></div>' +
 
-      '<section class="sec" id="guide"><div class="sec-h"><div><h2>이용 안내</h2><p>신청부터 이용까지 네 단계면 됩니다.</p></div></div>' +
+      '<section class="sec" id="guide"><div class="sec-h"><div><h2>이용 안내</h2></div></div>' +
       '<ol class="steps"><li><b>회원가입</b><p>이름, 동·호수, 연락처로 한 번만 가입합니다.</p></li><li><b>이용권 신청</b><p>이용할 시설과 달을 골라 신청합니다.</p></li><li><b>관리자 확인</b><p>확인이 끝나면 상태가 "확정"으로 바뀝니다.</p></li><li><b>시설 이용</b><p>첫 방문 때 출입 등록 후 이용합니다.</p></li></ol>' +
       '<div class="talls" style="margin-top:20px">' + C.cats.map(function (c) { return '<a class="tall" href="list.html?cat=' + c.id + '">' + art(c.id) + '<div class="tx"><small>' + esc(c.short) + '</small><b>' + esc(c.desc) + '</b></div></a>'; }).join('') + '</div></section>' +
 
