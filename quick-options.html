@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>바로가기 버튼 시안 3종</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="css/style.css?v=20261125d">
+<style>
+/* 시안 비교용 페이지 — 실제 사이트에는 아직 적용하지 않았습니다 */
+.opt { padding: 34px 0 6px; } .opt h2 { font-size: 20px; margin-bottom: 4px; } .opt h2 span { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 14px; margin-right: 8px; }
+.opt p { color: var(--ink3); font-size: 14px; margin-bottom: 16px; }
+.cur { opacity: .9; }
+.ic { color: var(--ink2); }
+
+/* A. 사진 카드형: 위에 사진, 아래에 이름 */
+.qa { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+.qa a { display: block; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: #fff; transition: transform .2s, box-shadow .2s; }
+.qa .ph { position: relative; aspect-ratio: 4 / 3; background: var(--soft); }
+.qa .lb { display: flex; justify-content: space-between; align-items: center; padding: 13px 14px; font-weight: 700; font-size: 15.5px; } .qa .lb i { font-style: normal; color: var(--ink3); font-weight: 400; }
+
+/* B. 사진 전체 배경 + 흰 글자 */
+.qb { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+.qb a { position: relative; display: block; aspect-ratio: 1 / 1.08; border-radius: 16px; overflow: hidden; color: #fff; }
+.qb a::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.05) 30%, rgba(0,0,0,.66) 100%); }
+.qb b { position: absolute; left: 16px; bottom: 15px; z-index: 2; font-size: 17px; font-weight: 700; } .qb small { position: absolute; right: 14px; top: 12px; z-index: 2; width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.9); color: var(--ink); display: grid; place-items: center; font-size: 15px; }
+.qb .plain { background: var(--ink); } .qb .plain.b2 { background: #3d4a66; } .qb .plain::after { display: none; } .qb .plain svg { position: absolute; left: 16px; top: 16px; width: 34px; height: 34px; opacity: .9; }
+
+/* C. 동그란 사진 아이콘 + 이름 */
+.qc { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; background: var(--soft); border-radius: 20px; padding: 24px 12px 20px; }
+.qc a { display: grid; justify-items: center; gap: 10px; text-align: center; font-weight: 600; font-size: 15px; }
+.qc .cir { position: relative; width: 84px; height: 84px; border-radius: 50%; overflow: hidden; background: #fff; box-shadow: 0 0 0 1px rgba(23,24,28,.08), 0 6px 14px rgba(0,0,0,.08); display: grid; place-items: center; }
+.qc .cir svg { width: 36px; height: 36px; }
+
+@media (hover:hover) { .qa a:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,.1); } .qc a:hover .cir { transform: translateY(-3px); } .qb a:hover .art { transform: scale(1.05); } }
+@media (max-width: 1000px) { .qa, .qb { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .qa, .qb { grid-template-columns: 1fr 1fr; gap: 10px; } .qb b { font-size: 16px; } .qc { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 6px; padding: 20px 8px; } .qc .cir { width: 72px; height: 72px; } .qc a { font-size: 14px; } }
+</style>
+</head>
+<body>
+<main class="wrap" style="padding-bottom:70px">
+  <div class="page-h"><h1>바로가기 버튼 시안</h1><p>아직 사이트에는 적용하지 않았습니다. 마음에 드는 번호를 알려 주세요.</p></div>
+
+  <section class="opt cur"><h2><span>0</span>지금 디자인</h2><p>연회색 칸 + 오른쪽 아래 모서리 사진</p><div class="qgrid" id="q0"></div></section>
+  <section class="opt"><h2><span>1</span>사진 카드형</h2><p>위에 사진을 크게, 아래에 이름과 화살표. 시설 사진이 가장 잘 보입니다.</p><div class="qa" id="q1"></div></section>
+  <section class="opt"><h2><span>2</span>사진 배경형</h2><p>사진을 칸 전체에 깔고 그 위에 흰 글자. 가장 눈에 띄고 스파크플러스 추천 카드와 비슷합니다.</p><div class="qb" id="q2"></div></section>
+  <section class="opt"><h2><span>3</span>동그란 아이콘형</h2><p>동그란 사진 아래에 이름. 앱 메뉴처럼 가볍고 자리를 가장 적게 차지합니다.</p><div class="qc" id="q3"></div></section>
+</main>
+<script>
+var IC = {
+  my: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="10" width="36" height="46" rx="4"/><path d="M23 23h18M23 33h18M23 43h10"/></svg>',
+  guide: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 54h48M14 54V22l14-8v40M28 54V28l18-6v32M19 28v3M19 36v3M19 44v3M34 34v3M34 42v3M40 32v3M40 40v3"/></svg>'
+};
+var L = [['헬스장', 'img/fac-gym.jpg', 'gym'], ['독서실', 'img/fac-study.jpg'], ['골프연습장', 'img/fac-golf.jpg'], ['골프장 라커', 'img/fac-locker.jpg'], ['마이페이지', '', 'my'], ['이용 안내', '', 'guide']];
+var ph = function (x) { return '<div class="art' + (x[2] === 'gym' ? ' ph-gym' : '') + '" style="background-image:url(' + x[1] + ')"></div>'; };
+document.getElementById('q0').innerHTML = L.map(function (x) { return '<a class="qcard" href="#"><b>' + x[0] + '</b><div class="cir">' + (x[1] ? ph(x) : '<div class="art ' + (x[2] === 'my' ? 'list' : 'sky') + '">' + IC[x[2]] + '</div>') + '</div></a>'; }).join('');
+document.getElementById('q1').innerHTML = L.map(function (x) { return '<a href="#"><div class="ph">' + (x[1] ? '<div class="art" style="background-image:url(' + x[1] + ')"></div>' : '<div class="art ' + (x[2] === 'my' ? 'locker' : 'sky') + '">' + IC[x[2]] + '</div>') + '</div><div class="lb">' + x[0] + '<i>›</i></div></a>'; }).join('');
+document.getElementById('q2').innerHTML = L.map(function (x, i) { return x[1] ? '<a href="#"><div class="art" style="background-image:url(' + x[1] + ')"></div><b>' + x[0] + '</b><small>›</small></a>' : '<a href="#" class="plain' + (i === 5 ? ' b2' : '') + '">' + IC[x[2]] + '<b>' + x[0] + '</b><small>›</small></a>'; }).join('');
+document.getElementById('q3').innerHTML = L.map(function (x) { return '<a href="#"><span class="cir">' + (x[1] ? '<span class="art" style="background-image:url(' + x[1] + ')"></span>' : '<span class="ic">' + IC[x[2]] + '</span>') + '</span>' + x[0] + '</a>'; }).join('');
+</script>
+</body>
+</html>
